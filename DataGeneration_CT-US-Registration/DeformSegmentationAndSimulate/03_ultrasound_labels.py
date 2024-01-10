@@ -79,20 +79,23 @@ def calculate_splines(segmentation: torchio.Image, output_path, output_folder, f
     lowest_sacrum_index = 0
     for i in range(segmentation_data.shape[2]):
         slice_ = segmentation_data[:, :, i]
-        if (slice_ == 92).sum() > 0 and (slice_ == 18).sum() == 0:
+        # if (slice_ == 92).sum() > 0 and (slice_ == 18).sum() == 0:
+        if (slice_ == 25).sum() > 0 :
             lowest_sacrum_index = i
             break
     lowest_t11_index = 0
     for i in range(segmentation_data.shape[2]):
         slice_ = segmentation_data[:, :, i]
-        if (slice_ == 23).sum() > 0:
+        # if (slice_ == 23).sum() > 0:
+        if (slice_ == 33).sum() > 0:
             lowest_t11_index = i
             break
     # find the lateral lowest point
     lowest_lateral_index = 0
     for i in range(segmentation_data.shape[1]):
         slice_ = segmentation_data[:, i, :]
-        if ((slice_ < 24) & (slice_ >= 18)).sum() > 0:
+        # if ((slice_ < 24) & (slice_ >= 18)).sum() > 0:
+        if ((slice_ >= 25) & (slice_ < 33)).sum() > 0:
             lowest_lateral_index = i
             break
 
@@ -104,7 +107,8 @@ def calculate_splines(segmentation: torchio.Image, output_path, output_folder, f
     y2 = y1 + 100 // segmentation.spacing[1]  # for the direction spline
     z2 = lowest_t11_index #segmentation_data.shape[2]
     z1 = lowest_sacrum_index
-
+    print(f"shape of segs:{segmentation_data.shape}")
+    print(x,y1,y2,z1,z2)
     # fixing_vector = np.array([1, -1, 1])
 
     sitk_image = sitk.ReadImage(segmentation.path)

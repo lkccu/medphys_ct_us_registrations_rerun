@@ -9,7 +9,7 @@ def process(args):
     # iterate over the txt file
     with open(args.txt_file) as file:
         spine_ids = [line.strip() for line in file]
-    placeholders = ['PathToRaycastedLabels', 'PathToTrackingStream', 'PathToSavePcd', 'Value1', 'Value2', 'Value3',
+    placeholders = ['PathToRaycastedLabels', 'PathToTrackingSequence', 'PathToSavePcd', 'Value1', 'Value2', 'Value3',
                     'Value4', 'Value5', 'Value6']
 
     for spine_id in spine_ids:
@@ -51,7 +51,7 @@ def process_deformed_spine(args, deform, extract_pcd_from_labelmaps_batch_file, 
         path_to_save = os.path.join(dir_name_vert, spine_id + "_verLev" + str(vertebra) + "_forces" + str(
                     deform) + "_deformed_net_output.pcd")
 
-        print("Extracting pointcloud from network output for: " + str(spine_id) + "and deformation" + str(
+        print("Extracting pointcloud from network outputs for: " + str(spine_id) + "and deformation" + str(
             deform) + " and vert: " + str(vertebra))
         create_imfusion_args(extract_pcd_from_labelmaps_batch_file, path_to_raycasted, path_to_save, placeholders,
                              tracking_path, vertebra)
@@ -67,16 +67,16 @@ def process_deformed_spine(args, deform, extract_pcd_from_labelmaps_batch_file, 
 
 def create_imfusion_args(extract_pcd_from_labelmaps_batch_file, path_to_raycasted, path_to_save, placeholders,
                          tracking_path, vertebra):
-    values_to_remove = ['18', '19', '20', '21', '22', '23', '92']
+    values_to_remove = ['27', '28', '29', '30', '31', '32', '25']
     # the current level of the vertebra we keep, the rest of the labels we replace with 0
     l_number = vertebra - 19
-    values_to_remove.remove(str(23 - l_number))
+    values_to_remove.remove(str(32 - l_number))
     # create arguments list to call ImFusion with
     arguments = ""
     for p in placeholders:
         if p == 'PathToRaycastedLabels':
             value = path_to_raycasted
-        elif p == 'PathToTrackingStream':
+        elif p == 'PathToTrackingSequence':
             value = tracking_path
         elif p == 'PathToSavePcd':
             value = path_to_save

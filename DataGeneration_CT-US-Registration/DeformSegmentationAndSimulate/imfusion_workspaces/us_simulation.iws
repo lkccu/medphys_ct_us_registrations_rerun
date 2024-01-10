@@ -19,11 +19,11 @@
         <property name="Hybrid Ultrasound Simulation">
             <param name="attenuationCoefficient">0.21</param>
             <param name="gain">0</param>
-            <param name="probeWidth">80</param>
-            <param name="depth">75</param>
-            <param name="elementsHeight">2</param>
+            <param name="probeWidth">40</param>
+            <param name="depth">100</param>
+            <param name="elementsHeight">1</param>
             <param name="soundSpeed">1540</param>
-            <param name="signalFreq">7</param>
+            <param name="signalFreq">2</param>
             <param name="noiseSizeScale">4</param>
             <param name="noiseIntensityScale">1.5</param>
             <param name="waveWidth">2</param>
@@ -98,7 +98,7 @@
                 <param name="isClosed">0</param>
             </property>
             <property name="Geometry">
-                <param name="convex">0</param>
+                <param name="linear">0</param>
                 <param name="geometry">2</param>
                 <param name="centerX">0</param>
                 <param name="centerY">0</param>

@@ -53,7 +53,7 @@ def process(txt_file, root_path_spine, segmentation_folder, out_path_spine):
                 image = t(image)
                 segmentation = t(segmentation)
 
-            if image.shape != segmentation.shape:  # there is a chance that output of totalsegmentator is slightly bigger
+            if image.shape != segmentation.shape:  # there is a chance that outputs of totalsegmentator is slightly bigger
                 t = Resample(image)
                 segmentation = t(segmentation)
 
@@ -117,8 +117,10 @@ def region_growing(image: torchio.Image, segmentation: torchio.Image, threshold,
     image_data = image.data.squeeze().to(device)
 
     seg_data = segmentation.data.squeeze().to(device)
-    seg_data[(seg_data == 95) | (seg_data == 94) | (seg_data == 100) |
-             (seg_data == 101) | (seg_data == 109)] = 8  # muscle todo modify label data 
+    seg_data[(seg_data == 80) | (seg_data == 81) | (seg_data == 82) |
+             (seg_data == 83) | (seg_data == 84) | (seg_data == 85) |
+             (seg_data == 86) | (seg_data == 87) | (seg_data == 88) |
+             (seg_data == 89)  ] = 8  # muscle todo modify label data 
 
     kernel_size = 3
 
@@ -145,8 +147,10 @@ def region_growing_1(image: torchio.Image, segmentation: torchio.Image, threshol
     image_data = image.data.squeeze()
 
     seg_data = segmentation.data.squeeze()
-    seg_data[(seg_data == 95) | (seg_data == 94) | (seg_data == 100) |
-             (seg_data == 101) | (seg_data == 109)] = 8  # muscle
+    seg_data[(seg_data == 80) | (seg_data == 81) | (seg_data == 82) |
+             (seg_data == 83) | (seg_data == 84) | (seg_data == 85) |
+             (seg_data == 86) | (seg_data == 87) | (seg_data == 88) |
+             (seg_data == 89)  ] = 8  # muscle
 
     # Get the labeled region
     region_mask = (seg_data == region_label)
@@ -220,7 +224,7 @@ def mask_middle_part(image, segmentation):
     lowest_sacrum_index = 0
     for i in range(segmentation_data.shape[2]):
         slice_ = segmentation_data[:, :, i]
-        if (slice_ == 27).sum() > 0:
+        if (slice_ == 25).sum() > 0:
             lowest_sacrum_index = i
             break
     # find T11 lowest point
@@ -228,7 +232,7 @@ def mask_middle_part(image, segmentation):
     if lowest_sacrum_index is not None:
         for i in range(lowest_sacrum_index, segmentation_data.shape[2]):
             slice_ = segmentation_data[:, :, i]
-            if (slice_ == 33).sum() > 0:
+            if (slice_ == 34).sum() > 0:
                 lowest_t1_index = i
                 break
 
@@ -356,13 +360,13 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         "--segmentation_folder",
         required=True,
-        help="folder containing the output of the total segmentator"
+        help="folder containing the outputs of the total segmentator"
     )
 
     arg_parser.add_argument(
         "--out_path_spine",
         required=True,
-        help="output folder path for cropped spine folders"
+        help="outputs folder path for cropped spine folders"
     )
 
     # arg_parser.add_argument(

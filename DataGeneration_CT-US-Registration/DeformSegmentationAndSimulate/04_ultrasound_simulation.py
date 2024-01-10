@@ -24,14 +24,14 @@ def process(root_path_spine, txt_file):
 
             arguments_imfusion = f"batch={os.path.join(subfolder_path, batch_file)}"
             print('ARGUMENTS: ', arguments_imfusion)
-            os.system("start ImFusionConsole" + " " + workspace_us_simulation + " " + arguments_imfusion)
+            os.system("ImFusionConsole" + " " + workspace_us_simulation + " " + arguments_imfusion)
             print('################################################### ')
 
 
 
 
 if __name__ == "__main__":
-    arg_parser = argparse.ArgumentParser(description="replace the labels with ultrasound simuation labels")
+    arg_parser = argparse.ArgumentParser(description="replace the labels with ultrasound simulation labels")
 
     arg_parser.add_argument(
         "--root_path_spine",

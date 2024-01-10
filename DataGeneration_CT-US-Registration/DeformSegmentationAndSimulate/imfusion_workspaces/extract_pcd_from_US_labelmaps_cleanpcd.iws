@@ -322,12 +322,12 @@
 			<param name="outputUids"/>
 		</property>
 		<property name="Convert to Sweep">
-			<param name="Tracking stream file">Tracking Stream</param>
+			<param name="Tracking sequence file">%(PathToTrackingSequence)</param>
 			<param name="execute">1</param>
 			<param name="inputUids">"data0" </param>
 			<param name="outputUids">"data1" </param>
-			<property name="Tracking Stream">
-				<param name="location">%(PathToTrackingStream)</param>
+			<property name="Tracking Sequence">
+				<param name="location">%(PathToTrackingSequence)</param>
 				<param name="transposeMatrix">0</param>
 				<param name="noQuality">0</param>
 				<param name="timestampFront">0</param>

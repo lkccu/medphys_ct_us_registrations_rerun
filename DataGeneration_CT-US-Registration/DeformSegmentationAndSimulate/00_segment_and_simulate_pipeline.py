@@ -18,7 +18,7 @@ if __name__ == '__main__':
       
       3. The deformation pipeline should already have happened 
       
-      4. Folder containing the segmentation output from the Totalsegmentator
+      4. Folder containing the segmentation outputs from the Totalsegmentator
 
       Steps of the pipeline:
       #1. Crop ROI based on the position of Sacrum and T11
@@ -70,13 +70,13 @@ if __name__ == '__main__':
     arg_parser.add_argument(
         "--segmentation_folder",
         required=True,
-        help="folder containing the output of the total segmentator"
+        help="folder containing the outputs of the total segmentator"
     )
 
     arg_parser.add_argument(
         "--verse_path",
         required=True,
-        help="output folder path for cropped spine folders"
+        help="outputs folder path for cropped spine folders"
     )
 
     args = arg_parser.parse_args()

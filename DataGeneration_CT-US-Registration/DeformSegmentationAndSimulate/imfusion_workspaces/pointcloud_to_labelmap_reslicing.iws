@@ -248,7 +248,7 @@
 			<param name="inputUids">"data3" </param>
 			<param name="outputUids"/>
 		</property>
-		<property name="Extract Tracking Stream">
+		<property name="Extract Tracking Sequence">
 		    <param name="Remove Timestamp">0</param>
 			<param name="Check Distance when Removing Timestamps">0</param>
 			<param name="Extract All">0</param>
@@ -259,7 +259,7 @@
 			<param name="outputUids">"data4" </param>
 			<property name="Controller"/>
 		</property>
-		<property name="Tracking Stream">
+		<property name="Tracking Sequence">
 			<param name="location">%(OUTPUTTRACKING)</param>
 			<param name="transposeMatrix">0</param>
 			<param name="noQuality">0</param>
