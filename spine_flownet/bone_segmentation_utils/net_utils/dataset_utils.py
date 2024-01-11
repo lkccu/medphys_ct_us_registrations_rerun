@@ -142,8 +142,8 @@ class RGBToGray(ImageOnlyTransform):
 def split_dataframe(df_in, stratify_col, test_size=0.1, val_size=0.1, seed=42):
     """split dataframes into train, val and testing using a stratified shuffle algorithm
     :param df_in: panda dataframe to be split
-    :param test_size: percentage of total data to be used for testing
-    :param val_size: percentage of total data to be used for validation
+    :param test_size: percentage of total rawdata to be used for testing
+    :param val_size: percentage of total rawdata to be used for validation
     :param stratify_col: pandas column to be used for stratification, e.g. the label column
     :param seed: seed used for random state
     """
@@ -171,8 +171,8 @@ def split_dataframe(df_in, stratify_col, test_size=0.1, val_size=0.1, seed=42):
 def split_dataset(dataset_in, test_size=0.1, val_size=0.1, seed=42):
     """split dataframes into train, val and testing using a stratified shuffle algorithm
     :param df_in: panda dataframe to be split
-    :param test_size: percentage of total data to be used for testing
-    :param val_size: percentage of total data to be used for validation
+    :param test_size: percentage of total rawdata to be used for testing
+    :param val_size: percentage of total rawdata to be used for validation
     :param stratify_col: pandas column to be used for stratification, e.g. the label column
     :param seed: seed used for random state
     """

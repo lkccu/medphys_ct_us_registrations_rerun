@@ -110,7 +110,7 @@ class Down(pl.LightningModule):
 class Up(pl.LightningModule):
     """
     Each up block starts off with a 2x2 up convolution with stride 2
-    and then applies a copy and crop operation using the skip connections i.e. the data from the down path
+    and then applies a copy and crop operation using the skip connections i.e. the rawdata from the down path
     before applying two 3x3 convolutions + ReLu.
     """
     def __init__(self, in_channels, out_channels, bilinear=True):

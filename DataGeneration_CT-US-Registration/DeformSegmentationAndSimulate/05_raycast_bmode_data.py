@@ -88,7 +88,9 @@ if __name__ == "__main__":
 
     # iterate over the txt file
     with open(args.txt_file) as file:
+        # todo sub
         spine_ids = [f"sub-{line.strip()}" for line in file]
+        # spine_ids = [line.strip() for line in file]
 
 
     for spine_id in spine_ids:

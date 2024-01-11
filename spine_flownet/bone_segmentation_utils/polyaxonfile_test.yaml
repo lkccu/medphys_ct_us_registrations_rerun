@@ -35,7 +35,7 @@ environment:
 
 declarations:
   config_file: config/pix2pix_test_config.yml
-  data_root: /data/RutgersCampProject/test_CT_labels
+  data_root: /rawdata/RutgersCampProject/test_CT_labels
 
 run:
   cmd:

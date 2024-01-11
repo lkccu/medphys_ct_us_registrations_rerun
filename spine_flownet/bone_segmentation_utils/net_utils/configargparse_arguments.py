@@ -32,7 +32,7 @@ def build_configargparser(parser):
     trainer_group.add_argument('--val_percent_check', type=float, default=1.0)
     trainer_group.add_argument('--test_percent_check', type=float, default=1.0)
     trainer_group.add_argument('--overfit_batches', type=float, default=0.0,
-                               help='overfit a percentage of trainign data (default: 0.0)')
+                               help='overfit a percentage of trainign rawdata (default: 0.0)')
     trainer_group.add_argument('--log_interval', type=int, default=100)
     trainer_group.add_argument('--num_workers', type=int, default=8, help='set the number of workers to be used on your machine (default: 8)')
     trainer_group.add_argument('--learning_rate', type=float, default=0.001,

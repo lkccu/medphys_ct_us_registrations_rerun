@@ -45,7 +45,7 @@ class SubjectSplit(BaseDbModule, abc.ABC, metaclass=BasedModuleChildMeta):
 
             subject_list = getattr(self.hparams, split + "_subjects")
 
-            print("Num subjects in {} split: {} - num data: {}".format(split,
+            print("Num subjects in {} split: {} - num rawdata: {}".format(split,
                                                                        len(subject_list),
                                                                        len(self.data[split].AB_paths) ))
 

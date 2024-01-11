@@ -23,7 +23,7 @@ import datetime
 
 def download():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DATA_DIR = os.path.join(BASE_DIR, 'data')
+    DATA_DIR = os.path.join(BASE_DIR, 'rawdata')
     if not os.path.exists(DATA_DIR):
         os.mkdir(DATA_DIR)
     if not os.path.exists(os.path.join(DATA_DIR, 'modelnet40_ply_hdf5_2048')):
@@ -42,7 +42,7 @@ def load_data(partition):
     all_label = []
     for h5_name in glob.glob(os.path.join(DATA_DIR, 'modelnet40_ply_hdf5_2048', 'ply_data_%s*.h5' % partition)):
         f = h5py.File(h5_name)
-        data = f['data'][:].astype('float32')
+        data = f['rawdata'][:].astype('float32')
         label = f['label'][:].astype('int64')
         f.close()
         all_data.append(data)
@@ -121,7 +121,7 @@ def apply_random_rotation(pc, rotation_center=np.array([0, 0, 0]), r=None):
 
 
 def augment_test(flow, pc1, pc2, tre_points, max_rotation=20.0, rotation=0, axis=None):
-    # ###### Generating the arrays where to store the augmented data - the fourth dimension remains constant #######
+    # ###### Generating the arrays where to store the augmented rawdata - the fourth dimension remains constant #######
     augmented_pc1 = np.zeros(pc1.shape)
     augmented_pc2 = np.zeros(pc2.shape)
 
@@ -133,7 +133,7 @@ def augment_test(flow, pc1, pc2, tre_points, max_rotation=20.0, rotation=0, axis
         augmented_pc2[:, -1] = pc2[:, -1]
         pc2 = pc2[:, :3]
 
-    # ###### Augmenting the data #######
+    # ###### Augmenting the rawdata #######
     # The ground truth position of the deformed source
     gt_target = pc1 + flow
 
@@ -157,7 +157,7 @@ def augment_test(flow, pc1, pc2, tre_points, max_rotation=20.0, rotation=0, axis
 
 
 def augment_data(flow, pc1, pc2, tre_points, augmentation_prob=0.5, max_rotation=20):
-    # ###### Generating the arrays where to store the augmented data - the fourth dimension remains constant #######
+    # ###### Generating the arrays where to store the augmented rawdata - the fourth dimension remains constant #######
     augmented_pc1 = np.zeros(pc1.shape)
     augmented_pc2 = np.zeros(pc2.shape)
 
@@ -169,7 +169,7 @@ def augment_data(flow, pc1, pc2, tre_points, augmentation_prob=0.5, max_rotation
         augmented_pc2[:, -1] = pc2[:, -1]
         pc2 = pc2[:, :3]
 
-    # ###### Augmenting the data #######
+    # ###### Augmenting the rawdata #######
     # The ground truth position of the deformed source
     gt_target = pc1 + flow
 
@@ -271,11 +271,11 @@ class SceneflowDataset(Dataset):
                  train_set_size: int = None, occlude_data=False, occlude_ratio=0, **kwargs):
         """
         :param npoints: number of points of input point clouds
-        :param root: folder of data in .npz format
+        :param root: folder of rawdata in .npz format
         :param mode: mode can be any of the "train", "test" and "validation"
-        :param raycasted: the data used is raycasted or full vertebras
-        :param raycasted: the data used is raycasted or full vertebrae
-        :param augment: if augment data for training
+        :param raycasted: the rawdata used is raycasted or full vertebras
+        :param raycasted: the rawdata used is raycasted or full vertebrae
+        :param augment: if augment rawdata for training
         :param data_seed: which permutation to use for slicing the dataset
         """
 
@@ -299,7 +299,7 @@ class SceneflowDataset(Dataset):
             else:
                 train_idx, val_idx, test_idx = self._leave_one_out_indices(test_id)
             self.spine_splits = {"train": train_idx, "val": val_idx, "test": test_idx}
-        else:  # already divided the data
+        else:  # already divided the rawdata
             self.spine_splits = splits
         if mode == "train" and train_set_size is not None:
             self.spine_splits[mode] = self.spine_splits[mode][:train_set_size]
@@ -337,7 +337,7 @@ class SceneflowDataset(Dataset):
         else:
             self.max_rotation = 20.0
 
-        # #in case we want to test on different data
+        # #in case we want to test on different rawdata
         # if self.train==False:
         #     self.root = "./spine_clouds"
         # else:
@@ -363,7 +363,7 @@ class SceneflowDataset(Dataset):
     def get_tre_points(self, filename):
         """
         Loading the points position for TRE error computation in testing. They are saved in the same folder as the
-        data as spine_id + "_facet_targets.txt".
+        rawdata as spine_id + "_facet_targets.txt".
         :param filename: The input filename
         """
         # Example: filename = some_fold/raycasted_spine22_ts_7_0.npz
@@ -374,7 +374,7 @@ class SceneflowDataset(Dataset):
         # --> spine_id = spine22
         spine_id = [item for item in filename.split("_") if "spine" in item][0]
 
-        # todo: remove this in future, only for wrongly named data
+        # todo: remove this in future, only for wrongly named rawdata
         spine_id = spine_id.replace("raycasted", "")
         spine_id = spine_id.replace("ts", "")
 
@@ -466,7 +466,7 @@ class SceneflowDataset(Dataset):
 
     def normalize_data(self, source_pc, target_pc, tre_points = None):
         """
-        The function normalizes the data according to the Fu paper:
+        The function normalizes the rawdata according to the Fu paper:
 
         Given
         - vs_c = source centroid
@@ -614,8 +614,8 @@ class SceneflowDataset(Dataset):
 # if __name__ == '__main__':
 #     # train = SceneflowDataset(1024)
 #     # test = SceneflowDataset(1024, 'test')
-#     # for data in train:
-#     #     print(data[0].shape)
+#     # for rawdata in train:
+#     #     print(rawdata[0].shape)
 #     #     break
 #     # import mayavi.mlab as mlab
 #
@@ -625,8 +625,8 @@ class SceneflowDataset(Dataset):
 #     import time
 #
 #     tic = time.time()
-#     for i, data in enumerate(data_loader):
-#         pc1, pc2, col1, col2, flow, mask, surface1, surface2 = data
+#     for i, rawdata in enumerate(data_loader):
+#         pc1, pc2, col1, col2, flow, mask, surface1, surface2 = rawdata
 #         # print(surface1)
 #         # print(surface2)
 #         # position1 = np.where(surface1 == 1)[0]
@@ -664,11 +664,11 @@ class VerseFlowDataset(SceneflowDataset):
 
         """
                 :param npoints: number of points of input point clouds
-                :param root: folder of data in .npz format
+                :param root: folder of rawdata in .npz format
                 :param mode: mode can be any of the "train", "test" and "validation"
-                :param raycasted: the data used is raycasted or full vertebras
-                :param raycasted: the data used is raycasted or full vertebrae
-                :param augment: if augment data for training
+                :param raycasted: the rawdata used is raycasted or full vertebras
+                :param raycasted: the rawdata used is raycasted or full vertebrae
+                :param augment: if augment rawdata for training
                 :param data_seed: which permutation to use for slicing the dataset
                 """
 
@@ -692,7 +692,7 @@ class VerseFlowDataset(SceneflowDataset):
             else:
                 train_idx, val_idx, test_idx = self._leave_one_out_indices(test_id)
             self.spine_splits = {"train": train_idx, "val": val_idx, "test": test_idx}
-        else:  # already divided the data
+        else:  # already divided the rawdata
             self.spine_splits = splits
         # if mode == "train" and train_set_size is not None:
         #     self.spine_splits[mode] = self.spine_splits[mode][:train_set_size]
@@ -752,7 +752,7 @@ class VerseFlowDataset(SceneflowDataset):
     def get_tre_points(self, spine_id, folder):
         """
         Loading the points position for TRE error computation in testing. They are saved in the same folder as the
-        data as facet_verse + spine_id.txt.
+        rawdata as facet_verse + spine_id.txt.
         :param filename: The input filename
         """
         # Example: filename = some_fold/facet_verse507.txt
@@ -762,7 +762,7 @@ class VerseFlowDataset(SceneflowDataset):
         # # --> spine_id = spine22
         # spine_id = [item for item in filename.split("_") if "spine" in item][0]
         #
-        # # todo: remove this in future, only for wrongly named data
+        # # todo: remove this in future, only for wrongly named rawdata
         # spine_id = spine_id.replace("raycasted", "")
         # spine_id = spine_id.replace("ts", "")
         #

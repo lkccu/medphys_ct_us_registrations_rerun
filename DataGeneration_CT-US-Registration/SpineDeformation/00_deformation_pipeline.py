@@ -78,12 +78,14 @@ if __name__ == '__main__':
     pipeline = args.pipeline
 
     if 'scale_mesh_down' in pipeline or 'all' in pipeline:
+        print("########################### running 01_scale_mesh_down.py ####################################")
         subprocess.run(['python', '01_scale_mesh_down.py',
                         '--root_path_vertebrae', root_path_vertebrae,
                         '--list_file_names', txt_file_lumbar_spines,
                         '--workspace_scale_mesh', "imfusion_workspaces/scale_down_mesh.iws"])
 
     if 'generate_springs' in pipeline or 'all' in pipeline:
+        print("#################################### running 02_generate_springs_spine_deformation.py ####################################")
         subprocess.run(['python', '02_generate_springs_spine_deformation.py',
                         '--root_path_vertebrae', root_path_vertebrae,
                         '--root_folder_json_files', root_folder_json_files,
@@ -95,7 +97,8 @@ if __name__ == '__main__':
     # in my case python 3.9
     # QT and therefore the GUI might not work if QT is not installed in the same environment
     # for deforming all vertebrae, the GUI is not needed
-    if 'deform_spines' in pipeline or 'all' in pipeline:
+    if 'TR' in pipeline or 'all' in pipeline:
+        print("#################################### running 03_deform_lumbar_spines.py ####################################")
         subprocess.run(['python', '03_deform_lumbar_spines.py',
                         '--root_path_vertebrae', root_path_vertebrae,
                         '--list_file_names', txt_file_lumbar_spines,
@@ -105,16 +108,19 @@ if __name__ == '__main__':
                         '--deform_all'
                         ])
     if 'convert_vtu_to_obj' in pipeline or 'all' in pipeline:
+        print("#################################### running 04_convert_vtu_to_obj.py ####################################")
         subprocess.run(['python', '04_convert_vtu_to_obj.py',
                         '--list_file_names', txt_file_lumbar_spines,
                         '--root_path_vertebrae', root_path_vertebrae
                         ])
     if 'scale_mesh_up' in pipeline or 'all' in pipeline:
+        print("#################################### running 05_scale_mesh_up.py ####################################")
         subprocess.run(['python', '05_scale_mesh_up.py',
                         '--root_path_vertebrae', root_path_vertebrae,
                         '--list_file_names', txt_file_lumbar_spines,
                         '--workspace_scale_mesh', "imfusion_workspaces/scale_up_mesh.iws"])
     if 'merge_vertebrae_into_spine' in pipeline or 'all' in pipeline:
+        print("#################################### running 06_merge_vertebrae_into_spine_mesh.py ####################################")
         subprocess.run(['python', "06_merge_vertebrae_into_spine_mesh.py",
                         '--list_file_names', txt_file_lumbar_spines,
                         '--workspace_file', "imfusion_workspaces/merge_lumbar_vertebrae.iws",
@@ -123,6 +129,7 @@ if __name__ == '__main__':
                         '--nr_deform_per_spine', nr_deform_per_spine
                         ])
     if 'center_spine_and_vertebrae' in pipeline or 'all' in pipeline:
+        print("#################################### running 07_center_mesh.py ####################################")
         subprocess.run(['python', '07_center_mesh.py',
                         '--root_path_spines', root_path_spines,
                         '--root_path_vertebrae', root_path_vertebrae,

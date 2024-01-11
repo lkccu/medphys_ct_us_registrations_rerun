@@ -3,7 +3,7 @@
 import numpy as np
 from rigid_transform_3D import rigid_transform_3D
 
-# Test with random data
+# Test with random rawdata
 
 # Random rotation and translation
 R = np.random.rand(3,3)

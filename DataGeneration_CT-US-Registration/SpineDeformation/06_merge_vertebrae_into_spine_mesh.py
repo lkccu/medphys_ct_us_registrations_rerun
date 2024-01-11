@@ -4,13 +4,13 @@ import glob
 import sys
 
 def merge_obj_files(look_for, save_to, root_path_vertebrae,placeholders):
-    lumbar_vertebrae =["verLev20","verLev21","verLev22","verLev23","verLev24"]
+    lumbar_vertebrae =["verLev31","verLev30","verLev29","verLev28","verLev27"]
 
     filenames = sorted(
         glob.glob(os.path.join(root_path_vertebrae, look_for), recursive=True))
 
     filenames_lumbar = [filename for filename in filenames if any([lumb in os.path.basename(filename) for lumb in lumbar_vertebrae]) and 'scaled' not in os.path.basename(filename)]
-
+    print(len(filenames_lumbar))
     if (len(filenames_lumbar) != 5):
         print("More or less than 5 vertebrae were found for " + str(spine_id),
               file=sys.stderr)
@@ -23,7 +23,7 @@ def merge_obj_files(look_for, save_to, root_path_vertebrae,placeholders):
     arguments += placeholders[5] + "=" + save_to
     print(arguments)
     # call imfusion console
-    os.system("start ImFusionConsole" + " " + args.workspace_file + " " + arguments)
+    os.system("ImFusionConsole" + " " + args.workspace_file + " " + arguments)
 
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser(description="Merge multiple vertebrae meshes into one spine mesh")
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         # find original vertebrae as obj files
         merge_obj_files(
             look_for="**/*" + str(spine_id) + '*_msh.obj',
-            save_to= os.path.join(args.root_path_spines,spine_id,spine_id  + "_lumbar_msh.obj"),
+            save_to= os.path.join(args.root_path_spines,f'sub-{spine_id}',spine_id  + "_lumbar_msh.obj"),
             root_path_vertebrae=args.root_path_vertebrae,
             placeholders=placeholders
         )
@@ -85,7 +85,7 @@ if __name__ == "__main__":
             print("Merging: " + str(spine_id) + " deformation: " +  str(deform))
             merge_obj_files(
                 look_for= "**/*" + str(spine_id) + "*forces*" + str(deform) + "*deformed_20*" + '*.obj',
-                save_to=os.path.join(args.root_path_spines,spine_id,spine_id + "forcefield" + str(deform) +"_lumbar_deformed.obj"),
+                save_to=os.path.join(args.root_path_spines,f'sub-{spine_id}',spine_id + "forcefield" + str(deform) +"_lumbar_deformed.obj"),
                 root_path_vertebrae=args.root_path_vertebrae,
                 placeholders=placeholders
             )

@@ -43,12 +43,12 @@ def weights_init(m):
     classname=m.__class__.__name__
     if classname.find('Conv2d') != -1:
         nn.init.kaiming_normal_(m.weight.data)
-        # torch.nn.init.constant(m.weight.data, 1/1000)
-        # nn.init.xavier_normal(m.weight.data)
+        # torch.nn.init.constant(m.weight.rawdata, 1/1000)
+        # nn.init.xavier_normal(m.weight.rawdata)
     if classname.find('Conv1d') != -1:
         nn.init.kaiming_normal_(m.weight.data)
-        # torch.nn.init.constant(m.weight.data, 1/1000)
-        # nn.init.xavier_normal(m.weight.data)
+        # torch.nn.init.constant(m.weight.rawdata, 1/1000)
+        # nn.init.xavier_normal(m.weight.rawdata)
 
 
 def create_paths(args):
@@ -87,7 +87,7 @@ def update_args(args):
         from polyaxon_client.tracking import Experiment
         args.checkpoints_dir = Experiment().get_outputs_path()
         if '/mnt' in args.dataset_path:
-            args.dataset_path = args.dataset_path.replace('/mnt/polyaxon/data1/', '/data/')
+            args.dataset_path = args.dataset_path.replace('/mnt/polyaxon/data1/', '/rawdata/')
         print("You are running on the cluster :)")
         print(args)
     except Exception as e:

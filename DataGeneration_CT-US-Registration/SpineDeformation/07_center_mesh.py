@@ -16,7 +16,7 @@ def get_vertebrae_meshes_deformed_paths(vertebrae_dir, spine_id,deform):
     vertebrae_meshes = []
 
     # get all 5 vertebrae paths for one spine id and one deformation
-    for i in range(20,25):
+    for i in range(31,26,-1):
         curr_vert_path = os.path.join(vertebrae_dir,spine_id + "_verLev" + str(i),get_name_deformed_vertebra(spine_id, i, deform ))
         if(not Path(curr_vert_path).is_file()):
             print("No deformed vertebra found for spine %s, vert %s and deform %d" % (spine_id, str(i), deform), file=sys.stderr)
@@ -53,7 +53,7 @@ def center_all_deformed_spines_and_vertebrae_in_a_list(txt_file,nr_deform_per_sp
         for deform in range(int(nr_deform_per_spine)):
             print("Centering the spine and vertebrae of: " + str(spine_id) + " and deform " + str(deform))
             # get the paths to the spine with current spine_id and deformation number
-            spine_mesh_path = os.path.join(root_path_spines, spine_id, get_name_deformed_spine(spine_id, deform))
+            spine_mesh_path = os.path.join(root_path_spines, f'sub-{spine_id}', get_name_deformed_spine(spine_id, deform))
             if (not Path(spine_mesh_path).is_file()):
                 print("No deformed mesh found for spine %s and deform %d" % (spine_id, deform), file=sys.stderr)
 

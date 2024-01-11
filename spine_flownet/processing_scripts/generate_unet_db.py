@@ -72,7 +72,7 @@ val_spines = ["spine21"]
 test_spines = ["spine" + str(i) for i in range(1, 23)]
 generate_us_labels_batch_file(src_labels_dir="E:/NAS/jane_project/simulated_us_labelmaps",
                               src_ultrasound_dir="E:/NAS/jane_project/simulated_us",
-                              output_dir="C:/Repo/thesis/bone_segmentation_utils/data",
+                              output_dir="C:/Repo/thesis/bone_segmentation_utils/rawdata",
                               batch_file_path="../imfusion_workspaces/us_label_data.txt",
                               training_splits = {
                                                  "test": test_spines

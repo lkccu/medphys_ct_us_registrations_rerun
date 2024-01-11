@@ -19,10 +19,10 @@ class FacadesDataset(Dataset):
 
     def __getitem__(self, idx):
 
-        """Return a data point and its metadata information.
+        """Return a rawdata point and its metadata information.
 
         Parameters:
-            index - - a random integer for data indexing
+            index - - a random integer for rawdata indexing
 
         Returns a dictionary that contains A, B, A_paths and B_paths
             A (tensor) - - an image in the input domain
@@ -55,11 +55,11 @@ class UnalignedDataset(Dataset):
     """
     This dataset class can load unaligned/unpaired datasets.
 
-    It requires two directories to host training images from domain A '/path/to/data/trainA'
-    and from domain B '/path/to/data/trainB' respectively.
-    You can train the model with the dataset flag '--dataroot /path/to/data'.
+    It requires two directories to host training images from domain A '/path/to/rawdata/trainA'
+    and from domain B '/path/to/rawdata/trainB' respectively.
+    You can train the model with the dataset flag '--dataroot /path/to/rawdata'.
     Similarly, you need to prepare two directories:
-    '/path/to/data/testA' and '/path/to/data/testB' during test time.
+    '/path/to/rawdata/testA' and '/path/to/rawdata/testB' during test time.
     """
 
     def __init__(self, hparams, split):
@@ -71,11 +71,11 @@ class UnalignedDataset(Dataset):
 
         self.hparams=hparams
 
-        self.dir_A = os.path.join(self.hparams.data_root, split + 'A')  # create a path '/path/to/data/trainA'
-        self.dir_B = os.path.join(self.hparams.data_root, split + 'B')  # create a path '/path/to/data/trainB'
+        self.dir_A = os.path.join(self.hparams.data_root, split + 'A')  # create a path '/path/to/rawdata/trainA'
+        self.dir_B = os.path.join(self.hparams.data_root, split + 'B')  # create a path '/path/to/rawdata/trainB'
 
-        self.A_paths = sorted(make_dataset(self.dir_A, self.hparams.max_dataset_size))   # load images from '/path/to/data/trainA'
-        self.B_paths = sorted(make_dataset(self.dir_B, self.hparams.max_dataset_size))    # load images from '/path/to/data/trainB'
+        self.A_paths = sorted(make_dataset(self.dir_A, self.hparams.max_dataset_size))   # load images from '/path/to/rawdata/trainA'
+        self.B_paths = sorted(make_dataset(self.dir_B, self.hparams.max_dataset_size))    # load images from '/path/to/rawdata/trainB'
         self.A_size = len(self.A_paths)  # get the size of dataset A
         self.B_size = len(self.B_paths)  # get the size of dataset B
 
@@ -83,10 +83,10 @@ class UnalignedDataset(Dataset):
         self.transform_B = get_transform(self.hparams, grayscale=(self.hparams.output_nc == 1))
 
     def __getitem__(self, index):
-        """Return a data point and its metadata information.
+        """Return a rawdata point and its metadata information.
 
         Parameters:
-            index (int)      -- a random integer for data indexing
+            index (int)      -- a random integer for rawdata indexing
 
         Returns a dictionary that contains A, B, A_paths and B_paths
             A (tensor)       -- an image in the input domain

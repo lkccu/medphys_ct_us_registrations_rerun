@@ -5,17 +5,7 @@ DataGeneration_CT-US-Registration\SpineDeformation\00_deformation_pipeline.py;--
 DataGeneration_CT-US-Registration\DeformSegmentationAndSimulate\00_segment_and_simulate_pipeline.py;--root_path_spines 01_training --root_path_vertebrae dataset\vertebrae --list_file_names DataGeneration_CT-US-Registration\DeformSegmentationAndSimulate\test_spines.txt --nr_deform_per_spine 10 --segmentation_folder dataset\segs --verse_path dataset\cropped_spine
 DataGeneration_CT-US-Registration\thesis\convert_segmentation_into_mesh.py;--root_path_vertebrae dataset\vertebrae --list_file_names DataGeneration_CT-US-Registration\DeformSegmentationAndSimulate\test_spines.txt --workspace_file_segm_to_mesh DataGeneration_CT-US-Registration\thesis\imfusion_workspaces\segmentation_to_mesh.iws
 
-
-
-
-
 python 00_ultrasound_generation_and_dataset_creation.py --root_path_spines C:\Users\Alienware\Desktop\workspace-xyx\medphys_ct_us_registrations_rerun-main\dataset\01_training --root_path_vertebrae C:\Users\Alienware\Desktop\workspace-xyx\medphys_ct_us_registrations_rerun-main\dataset\vertebrae --list_file_names_spines C:\Users\Alienware\Desktop\workspace-xyx\medphys_ct_us_registrations_rerun-main\DeformSegmentationAndSimulate\test_spines.txt --nr_deform_per_spine 10 --pipeline convert_obj_to_labelmaps
-
-
 python 00_segment_and_simulate_pipeline.py --root_path_spines C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\rawdata --root_path_vertebrae C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\vertebrae --list_file_names C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\spine.txt --nr_deform_per_spine 10 --segmentation_folder C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\segs --verse_path C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\cropped_spine --pipeline
-
-
-
 python 00_deformation_pipeline.py --root_path_spines C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\rawdata --root_path_vertebrae C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\vertebrae --list_file_names C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\spine.txt --nr_deform_per_spine 10 --pipeline scale_mesh_down
-
 python totalsegcmd.py --root_path_spines C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\rawdata --list_file_names C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\spine.txt --segmentation_folder C:\Users\Alienware\Desktop\workspace-xyx\dataset-xyx\segs

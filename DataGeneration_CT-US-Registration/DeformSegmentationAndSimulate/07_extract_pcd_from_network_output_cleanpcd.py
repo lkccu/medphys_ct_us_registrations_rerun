@@ -42,7 +42,7 @@ def process_deformed_spine(args, deform, extract_pcd_from_labelmaps_batch_file, 
     tracking_path = os.path.join(os.path.join(args.root_path_spines, spine_id), simulation_file[0]).replace(".imf",
                                                                                                             "tracking.ts")
     # we extract one point cloud per vertebra
-    for vertebra in range(20, 25):
+    for vertebra in range(31, 26,-1):
         dir_name_spine = os.path.join(args.root_path_spines, spine_id)
         dir_name_vert = os.path.join(args.root_path_vertebrae, spine_id + "_verLev" + str(vertebra))
 
@@ -69,7 +69,7 @@ def create_imfusion_args(extract_pcd_from_labelmaps_batch_file, path_to_raycaste
                          tracking_path, vertebra):
     values_to_remove = ['27', '28', '29', '30', '31', '32', '25']
     # the current level of the vertebra we keep, the rest of the labels we replace with 0
-    l_number = vertebra - 19
+    l_number = vertebra - 26
     values_to_remove.remove(str(32 - l_number))
     # create arguments list to call ImFusion with
     arguments = ""

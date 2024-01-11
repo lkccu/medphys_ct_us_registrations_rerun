@@ -73,6 +73,8 @@ def pointcloud_to_resliced_labelmap(subfolder, nr_deform, output_folder, workspa
     p = subprocess.Popen("ImFusionConsole" + " " + workspace_file + " " + arguments_imfusion)
     time.sleep(10)
     p.kill()
+    # todo os.sys
+    #os.system("ImFusionConsole" + " " + workspace_file + " " + arguments_imfusion)
     print('################################################### ')
 
     return tracking_path
@@ -81,7 +83,10 @@ def pointcloud_to_resliced_labelmap(subfolder, nr_deform, output_folder, workspa
 def process(args):
     # iterate over the txt file
     with open(args.txt_file) as file:
+        # todo sub
         spine_ids = [f"sub-{line.strip()}" for line in file]
+        # spine_ids = [line.strip() for line in file]
+
     for spine_id in spine_ids:
 
         label_to_sweeo_batch_file = os.path.join(args.root_path_spines, spine_id, "label_to_sweep.txt")
@@ -100,7 +105,9 @@ def process(args):
         workspace_file = "./imfusion_workspaces/imageset_to_sweep.iws"
         arguments_imfusion = f"batch={label_to_sweeo_batch_file}"
         print('ARGUMENTS: ', arguments_imfusion)
-        subprocess.Popen("ImFusionConsole" + " " + workspace_file + " " + arguments_imfusion)
+        # todo os.sys
+        #subprocess.Popen("ImFusionConsole" + " " + workspace_file + " " + arguments_imfusion)
+        os.system("ImFusionConsole" + " " + workspace_file + " " + arguments_imfusion)
         print('################################################### ')
 
 def rename_imgs(parent_folder):

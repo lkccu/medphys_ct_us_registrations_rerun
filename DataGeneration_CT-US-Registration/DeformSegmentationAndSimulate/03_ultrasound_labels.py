@@ -16,7 +16,9 @@ def process(root_path_spine, txt_file):
     # Process each line
     for line in lines:
         line = line.strip()  # Remove leading/trailing whitespaces
+        # todo sub
         subfolder_path = os.path.join(root_path_spine, f"sub-{line}/")
+        # subfolder_path = os.path.join(root_path_spine, line)
 
         # Find the nii.gz file with 'seg' in its name
         nii_files = [

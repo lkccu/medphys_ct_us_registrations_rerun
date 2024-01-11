@@ -27,7 +27,7 @@ environment:
       limits: 1
 
 declarations:
-  data_root: /data/RutgersCampProject/CampUSDb
+  data_root: /rawdata/RutgersCampProject/CampUSDb
   config_file : config/pix2pix_config_semi_unpaired.yml
   train_folders : 'convex_probe,CT_cropped_masked'
   group_name: 'UnetSegmentation'

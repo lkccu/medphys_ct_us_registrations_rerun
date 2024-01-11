@@ -27,7 +27,7 @@ offset_center_of_mass = 0.005
 def get_vertebrae_meshes_from_filenames(root_folder, spine_name):
     vertebrae_meshes = []
     for i in range(0, 5):
-        path = os.path.join(root_folder, spine_name + "_verLev" + str(20 + i))
+        path = os.path.join(root_folder, spine_name + "_verLev" + str(31 - i))
         pathVertebra = \
             list(
                 pathlib.Path(path).glob('*scaled_msh.obj'))

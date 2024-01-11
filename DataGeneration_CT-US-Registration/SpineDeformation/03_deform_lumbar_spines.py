@@ -43,7 +43,7 @@ constant_force_fields_on_posterior= {
 }
 
 def get_path_vertebrae_mesh(root_path_vertebrae, spine_id, vert_id):
-    label = str(vert_id + 20)
+    label = str(31 -vert_id)
     folder_name = os.path.join(root_path_vertebrae, str(spine_id) + "_verLev" + str(label))
 
     # in the folder look for obj file
@@ -99,7 +99,7 @@ def add_collision_function(root):
 def add_vertebra_node(parent_node_vertebrae, nr_vertebra, spine_id, filename_vertebra, save_vtu_to,
                       constant_force_field, forcesID):
     curr_vert_id = str(nr_vertebra + 1)
-    label = str(20 + nr_vertebra)
+    label = str(31 - nr_vertebra)
     curr_vert = parent_node_vertebrae.addChild('vert' + curr_vert_id)
 
     curr_vert.addObject('MechanicalObject', name='center_mass' + curr_vert_id, template='Rigid3d')

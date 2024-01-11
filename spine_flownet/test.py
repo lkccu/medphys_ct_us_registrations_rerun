@@ -32,7 +32,7 @@ def compute_test_metrics(file_id, source_pc, source_color, gt_flow, estimated_fl
     :param: estimated_flow: np.ndarray() with size [n_batches, 3, n_points] containing the estimated flow
     """
 
-    # todo this is a fix not to make code crash - todo is adding tre points also for validation data
+    # todo this is a fix not to make code crash - todo is adding tre points also for validation rawdata
     if tre_points is None:
         tre_points = np.ones((source_pc.shape[0], 2, 4)) * -1
 
@@ -80,7 +80,7 @@ def save_metrics2csv(metric_dict_list):
 def log_metrics_dict2wandb(metric_dict_list, wandb_table):
     table_columns = wandb_table.columns
 
-    # Adding the average value over the whole test data set
+    # Adding the average value over the whole test rawdata set
     metric_dict_list.append({
         "id": "Average",
         "quaternion distance": np.mean([item["quaternion distance"] for item in metric_dict_list]),
@@ -119,7 +119,7 @@ def save_data(save_path, file_id, source_pc, source_color, target_pc, predicted_
 
 def get_color_array(vertebrae_idxs):
     """
-    According to the data loader, vertebrae_idxs is a list of 5 tensors with size [n_batches, npoints]
+    According to the rawdata loader, vertebrae_idxs is a list of 5 tensors with size [n_batches, npoints]
     """
 
     batch_size = vertebrae_idxs[0].size(0)

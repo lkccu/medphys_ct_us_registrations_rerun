@@ -54,5 +54,5 @@ if __name__ == '__main__':
                 arguments_imfusion += p + "=" + value + " "
 
             print('ARGUMENTS: ', arguments_imfusion)
-            os.system("start ImFusionConsole" + " " + args.workspace_scale_mesh + " " + arguments_imfusion)
+            os.system("ImFusionConsole" + " " + args.workspace_scale_mesh + " " + arguments_imfusion)
             print('################################################### ')

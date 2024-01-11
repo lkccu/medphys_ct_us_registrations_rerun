@@ -7,7 +7,7 @@ if __name__ == '__main__':
     1. Convert vertebral meshes to individual labelmaps 
     2. Merge these labelmaps into one labelmap 
     3. Generate the splines for ultrasound simulation
-    4. Simulate Ultrasound, save the labels as well as the tracking data  
+    4. Simulate Ultrasound, save the labels as well as the tracking rawdata  
     5. Raycast the labels 
     6. Extract PCD from compounded labels 
     """

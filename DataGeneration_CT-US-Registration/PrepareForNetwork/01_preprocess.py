@@ -321,7 +321,7 @@ def get_color_code(color_name):
 
 def save_for_sanity_check(data, save_dir):
     """
-    Saving the generated data in imfusion workspaces at specific location
+    Saving the generated rawdata in imfusion workspaces at specific location
     """
 
     source_pc = data["source_pc"][:, :3]
@@ -352,7 +352,7 @@ def save_for_sanity_check(data, save_dir):
         imf_root = utils.add_block_to_xml(imf_root,
                                           parent_block_name="Annotations",
                                           block_name="point_cloud_annotation",
-                                          param_dict={"referenceDataUid": "data" + str(i),
+                                          param_dict={"referenceDataUid": "rawdata" + str(i),
                                                       "name": str(name),
                                                       "color": str(color),
                                                       "labelText": "some",
@@ -362,7 +362,7 @@ def save_for_sanity_check(data, save_dir):
                                           parent_block_name="Algorithms",
                                           block_name="load_point_cloud",
                                           param_dict={"location": path,
-                                                      "outputUids": "data" + str(i)})
+                                                      "outputUids": "rawdata" + str(i)})
 
     # Adding the biomechanical_constraints
 
@@ -514,7 +514,7 @@ def match_the_flow(flow, preprocessed_source_spine, full_source_w_level):
 
 def preprocess_spine_data_new(root_path_spine, root_path_vert, line, number_of_deformations, use_net_output: bool):
     """
-    Preprocess the data for a given spine dataset. Specifically, for the given spine (i.e. for a given spine_id),
+    Preprocess the rawdata for a given spine dataset. Specifically, for the given spine (i.e. for a given spine_id),
     it ierates over all the timestamps for that given spine.
     The function does the following.
     1. It loads the "ts0" as the timestamp of the underformed spine, and therefore of the source spine.
@@ -604,10 +604,10 @@ def preprocess_spine_data_new(root_path_spine, root_path_vert, line, number_of_d
         flow = match_the_flow(full_flow, preprocessed_source_spine, full_source_w_level)
 
 
-        # Append the generated source-target pair to the data list
+        # Append the generated source-target pair to the rawdata list
         data_ = {
             "spine_id": line,
-            "source_ts_id": "source",  # todo: remove this one from data
+            "source_ts_id": "source",  # todo: remove this one from rawdata
             "target_ts_id": "field" + str(num),  # todo: change to show num
             "source_pc": preprocessed_source_spine,
             "target_pc": preprocessed_target_spine,
@@ -667,11 +667,11 @@ def add_biomechanical_constraints_to_raycasted(data):
 
         if (data["biomechanical_constraint"][i][0].color - p1_colored[3]) != 0:
             print(i, data["biomechanical_constraint"][i][0].color, p1_colored[3])
-            # p1_colored[3] = data["biomechanical_constraint"][i][0].color
+            # p1_colored[3] = rawdata["biomechanical_constraint"][i][0].color
             print("shit1")
         if (data["biomechanical_constraint"][i][1].color - p2_colored[3]) != 0:
             print(i, data["biomechanical_constraint"][i][1].color, p2_colored[3])
-            # p2_colored[3] = data["biomechanical_constraint"][i][1].color
+            # p2_colored[3] = rawdata["biomechanical_constraint"][i][1].color
             print("shit2")
 
         if sum((data["biomechanical_constraint"][i][1]._get_pt_as_array() - p2_colored[:3]) ** 2) > 1e-5:
@@ -680,16 +680,16 @@ def add_biomechanical_constraints_to_raycasted(data):
         constraint_points.append((p1_colored, p2_colored))
         constraint_flows.append((p1_flow, p2_flow))
 
-    # # Getting the indexes of the points in the source data which are closest to the ray_casted source points
-    # source_ray_casted_idxes = obtain_indices_raycasted_original_pc(spine_target=data["full_source_pc"],
-    #                                                                r_target=data["source_pc"])
-    # # data["source_pc"] = data["source_pc"][source_ray_casted_idxes]
-    # data["flow"] = data["flow"][source_ray_casted_idxes]
+    # # Getting the indexes of the points in the source rawdata which are closest to the ray_casted source points
+    # source_ray_casted_idxes = obtain_indices_raycasted_original_pc(spine_target=rawdata["full_source_pc"],
+    #                                                                r_target=rawdata["source_pc"])
+    # # rawdata["source_pc"] = rawdata["source_pc"][source_ray_casted_idxes]
+    # rawdata["flow"] = rawdata["flow"][source_ray_casted_idxes]
 
-    # # Getting the indexes of the points in the target data which are closest to the ray_casted target points
-    # target_ray_casted_idxes = obtain_indices_raycasted_original_pc(spine_target=data["full_deformed_pc"],
-    #                                                                r_target=data["target_pc"])
-    # data["target_pc"] = data["target_pc"][target_ray_casted_idxes]
+    # # Getting the indexes of the points in the target rawdata which are closest to the ray_casted target points
+    # target_ray_casted_idxes = obtain_indices_raycasted_original_pc(spine_target=rawdata["full_deformed_pc"],
+    #                                                                r_target=rawdata["target_pc"])
+    # rawdata["target_pc"] = rawdata["target_pc"][target_ray_casted_idxes]
 
     # Adding the biomechanical constraints to the source as they might be not present due to the ray-casting
     p1, p2 = zip(*constraint_points)
@@ -736,15 +736,15 @@ def generate_npz_files(root_path_spine, root_path_vert, txt_file, dst_npz_path, 
         if data_array is None:
             continue
 
-        print(f"Read {data_array.__len__()} data in folder {line}")
+        print(f"Read {data_array.__len__()} rawdata in folder {line}")
 
         save_facets(facets, os.path.join(dst_npz_path, "facet_" + line + ".txt"))
 
         for data in data_array:
             # if ray_casted:  # todo: ray casted is not implemented yet
-            #     data = get_ray_casted_data(data, src_raycasted_pc_path)
+            #     rawdata = get_ray_casted_data(rawdata, src_raycasted_pc_path)
 
-            # add_biomechanical_constraints_to_raycasted(data)
+            # add_biomechanical_constraints_to_raycasted(rawdata)
 
             # convert biomechanical_constraint to a 1-d array, putting all the constraint on a single
             # row - this needs to be changed in future to be a list of tuple or similar format where it is clear
@@ -788,7 +788,7 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         "--root_path_vert",
         required=True,
-        help="folder containing the data for vertebrae"
+        help="folder containing the rawdata for vertebrae"
     )
     arg_parser.add_argument(
         "--nr_deform_per_spine",
@@ -810,7 +810,7 @@ if __name__ == "__main__":
         help="use the segmentation output of the network"
     )
 
-    print("Preprocessing to get the network ready data")
+    print("Preprocessing to get the network ready rawdata")
     #
     args = arg_parser.parse_args()
 

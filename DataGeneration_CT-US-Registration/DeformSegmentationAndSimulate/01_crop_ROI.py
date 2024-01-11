@@ -19,7 +19,9 @@ def process(txt_file, root_path_spine, segmentation_folder, out_path_spine):
     for line in lines:
         line = line.strip()  # Remove leading/trailing whitespaces
         subfolder_path = os.path.join(root_path_spine, line)
+        # todo sub
         output_folder = os.path.join(out_path_spine, f"sub-{line}")
+        # output_folder = os.path.join(out_path_spine, line)
 
         if not os.path.isdir(output_folder):
             os.mkdir(output_folder)
@@ -40,7 +42,7 @@ def process(txt_file, root_path_spine, segmentation_folder, out_path_spine):
             print(f"Loaded image: {nii_path}")
 
             # Construct the segmentation file path
-            segmentation_file = f"{line}_segmentation.nii.gz"
+            segmentation_file = f"{line}_seg.nii.gz"
             segmentation_path = os.path.join(segmentation_folder, segmentation_file)
 
             # Open the segmentation file using torchio
@@ -60,7 +62,7 @@ def process(txt_file, root_path_spine, segmentation_folder, out_path_spine):
             cropped_img, cropped_seg = crop(image, segmentation)
             cropped_seg = segment_soft_tissue(cropped_img, cropped_seg)
             cropped_img.save(os.path.join(output_folder, f"{line}_cropped.nii.gz"), squeeze=True)
-            cropped_seg.save(os.path.join(output_folder, f"{line}_segmentation_cropped.nii.gz"), squeeze=True)
+            cropped_seg.save(os.path.join(output_folder, f"{line}_seg_cropped.nii.gz"), squeeze=True)
         else:
             print(f"No matching nii.gz files found in {subfolder_path}")
 
@@ -68,7 +70,7 @@ def process(txt_file, root_path_spine, segmentation_folder, out_path_spine):
 def segment_soft_tissue(image, segmentation: torchio.Image):
     seg_data = segmentation.data
     seg_data = region_growing(image, segmentation, threshold=[-100, 200], region_label=8)
-    # seg_data[(image.data > 0) & (image.data < 200) & (segmentation.data == 0)] = 109  # muscle
+    # seg_data[(image.rawdata > 0) & (image.rawdata < 200) & (segmentation.rawdata == 0)] = 109  # muscle
     seg_data[(image.data > -300) & (image.data <= 200) & (seg_data == 0)] = 3  # fat
 
     segmentation.set_data(seg_data)
@@ -120,7 +122,7 @@ def region_growing(image: torchio.Image, segmentation: torchio.Image, threshold,
     seg_data[(seg_data == 80) | (seg_data == 81) | (seg_data == 82) |
              (seg_data == 83) | (seg_data == 84) | (seg_data == 85) |
              (seg_data == 86) | (seg_data == 87) | (seg_data == 88) |
-             (seg_data == 89)  ] = 8  # muscle todo modify label data 
+             (seg_data == 89)  ] = 8  # muscle todo modify label rawdata
 
     kernel_size = 3
 
@@ -240,7 +242,7 @@ def mask_middle_part(image, segmentation):
 
 
 def mask_minimum_lateral_index(image, segmentation):
-    # Get the data from the segmentation label
+    # Get the rawdata from the segmentation label
     segmentation_data = segmentation.data.squeeze()
 
     #todo modify this
@@ -280,7 +282,7 @@ def mask_minimum_lateral_index(image, segmentation):
 
 
 def visualize(image):
-    # Get the image data
+    # Get the image rawdata
     image_data = image.data.squeeze()
 
     # Get the center index along each axis

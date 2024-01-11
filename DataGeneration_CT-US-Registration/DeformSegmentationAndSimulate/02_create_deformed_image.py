@@ -1,5 +1,7 @@
 import argparse
 import os
+import subprocess
+import time
 
 import numpy as np
 import pyvista as pv
@@ -118,8 +120,12 @@ def process(txt_file, root_path_spine, sampling_freq):
     # Process each line
     for line in lines:
         line = line.strip()  # Remove leading/trailing whitespaces
+        # todo sub
         subfolder_path = os.path.join(root_path_spine, f"sub-{line}/")
+        # subfolder_path = os.path.join(root_path_spine, line)
 
+        if not os.path.exists(subfolder_path):
+            os.mkdir(subfolder_path)
         # Find the non-deformed mesh
         non_deformed_files = [
             file_name
@@ -170,6 +176,8 @@ def apply_deformation(ct_file, seg_file, field_path, workspace_path):
     arguments_imfusion = ' '.join([f"{key}={value}" for key, value in arguments_imfusion.items()])
 
     print('ARGUMENTS: ', arguments_imfusion)
+    # todo os.sys
+    #p = subprocess.run("ImFusionConsole" + " " + workspace_path + " " + arguments_imfusion)
     os.system("start ImFusionConsole" + " " + workspace_path + " " + arguments_imfusion)
     print('################################################### ')
 
@@ -179,6 +187,9 @@ def apply_deformation(ct_file, seg_file, field_path, workspace_path):
     arguments_imfusion = ' '.join([f"{key}={value}" for key, value in arguments_imfusion.items()])
 
     print('ARGUMENTS: ', arguments_imfusion)
+    # todo os.sys
+
+    #p = subprocess.run("ImFusionConsole" + " " + workspace_path + " " + arguments_imfusion)
     os.system("start ImFusionConsole" + " " + workspace_path + " " + arguments_imfusion)
     print('################################################### ')
 

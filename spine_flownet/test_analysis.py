@@ -40,7 +40,7 @@ def add_spine_vertbyvert(imf_root, point_cloud, color_array, name, save_path, da
         imf_root = vutils.add_block_to_xml(imf_root,
                                            parent_block_name="Annotations",
                                            block_name="point_cloud_annotation",
-                                           param_dict={"referenceDataUid": "data" + str(data_uid),
+                                           param_dict={"referenceDataUid": "rawdata" + str(data_uid),
                                                        "name": str(name) + "_" + vert,
                                                        "color": vert_color,
                                                        "labelText":"some",
@@ -50,7 +50,7 @@ def add_spine_vertbyvert(imf_root, point_cloud, color_array, name, save_path, da
                                           parent_block_name="Algorithms",
                                           block_name="load_point_cloud",
                                           param_dict={"location": os.path.split(filepath)[-1],
-                                                      "outputUids": "data" + str(data_uid)})
+                                                      "outputUids": "rawdata" + str(data_uid)})
 
         data_uid += 1
 
@@ -59,7 +59,7 @@ def add_spine_vertbyvert(imf_root, point_cloud, color_array, name, save_path, da
 
 def save_for_pc_transformation(data_dir, file_id, save_root):
     """
-    Saving the generated data in imfusion workspaces at specific location
+    Saving the generated rawdata in imfusion workspaces at specific location
     """
 
     source_pc = np.loadtxt( os.path.join(data_dir, "source_spine" + file_id + ".txt"))
@@ -145,7 +145,7 @@ def apply_transform_vert_by_vert(pc, transformation_dict):
 
 def save_rigid_transformation(data_dir, file_id, save_root):
     """
-    Saving the generated data in imfusion workspaces at specific location
+    Saving the generated rawdata in imfusion workspaces at specific location
     """
 
     source_pc = np.loadtxt( os.path.join(data_dir, "source_spine" + file_id + ".txt"))

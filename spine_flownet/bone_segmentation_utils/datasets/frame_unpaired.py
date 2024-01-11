@@ -8,10 +8,10 @@ class FrameUnpaired(BaseUnpairedDataset):
         super().__init__(hparams, split, **kwargs)
 
     def __getitem__(self, idx):
-        """Return a data point and its metadata information.
+        """Return a rawdata point and its metadata information.
 
         Parameters:
-            index (int)      -- a random integer for data indexing
+            index (int)      -- a random integer for rawdata indexing
 
         Returns a dictionary that contains A, B, A_paths and B_paths
             A (tensor)       -- an image in the input domain

@@ -2,7 +2,7 @@ module : bone_segmentation2d.BoneSegmentation
 model: unet_2d.UNet2D
 datamodule : folder_split.FolderSplit
 dataset : frame_paired.FramePaired
-data_root : ./data/data
+data_root : ./rawdata/rawdata
 output_path : ./results
 num_workers : 0
 batch_size : 2

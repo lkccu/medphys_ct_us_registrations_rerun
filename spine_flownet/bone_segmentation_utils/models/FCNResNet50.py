@@ -22,10 +22,10 @@ class FCNResNet50(pl.LightningModule):
         out = self.model(x)['out']
         # if isinstance(out, dict):
         #     data_named_tuple = namedtuple("ModelEndpoints", sorted(out.keys()))  # type: ignore
-        #     data = data_named_tuple(**out)  # type: ignore
+        #     rawdata = data_named_tuple(**out)  # type: ignore
         #
         # elif isinstance(out, list):
-        #     data = tuple(out)
+        #     rawdata = tuple(out)
 
         return out
 

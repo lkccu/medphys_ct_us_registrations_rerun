@@ -17,7 +17,7 @@ class MyAlgorithm(imfusion.Algorithm):
     def convert_input(cls, data):
         if len(data) == 1:
             return data
-        raise IncompatibleError('Requires no input data')
+        raise IncompatibleError('Requires no input rawdata')
 
 
     def find_connections(self, line, pc):

@@ -283,7 +283,7 @@ def cal_gradient_penalty(netD, real_data, fake_data, device, type='mixed', const
         real_data (tensor array)    -- real images
         fake_data (tensor array)    -- generated images from the generator
         device (str)                -- GPU / CPU: from torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
-        type (str)                  -- if we mix real and fake data or not [real | fake | mixed].
+        type (str)                  -- if we mix real and fake rawdata or not [real | fake | mixed].
         constant (float)            -- the constant used in formula ( ||gradient||_2 - constant)^2
         lambda_gp (float)           -- weight for this loss
 
@@ -305,7 +305,7 @@ def cal_gradient_penalty(netD, real_data, fake_data, device, type='mixed', const
         gradients = torch.autograd.grad(outputs=disc_interpolates, inputs=interpolatesv,
                                         grad_outputs=torch.ones(disc_interpolates.size()).to(device),
                                         create_graph=True, retain_graph=True, only_inputs=True)
-        gradients = gradients[0].view(real_data.size(0), -1)  # flat the data
+        gradients = gradients[0].view(real_data.size(0), -1)  # flat the rawdata
         gradient_penalty = (((gradients + 1e-16).norm(2, dim=1) - constant) ** 2).mean() * lambda_gp        # added eps
         return gradient_penalty, gradients
     else:

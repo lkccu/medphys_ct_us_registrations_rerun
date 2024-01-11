@@ -17,9 +17,9 @@ def vtuToObj(file_path):
        # mesh_vtu.points * 1e3,
         mesh_vtu.points,
         mesh_vtu.cells,
-        # Optionally provide extra data on points, cells, etc.
+        # Optionally provide extra rawdata on points, cells, etc.
         mesh_vtu.point_data,
-        # Each item in cell data must match the cells array
+        # Each item in cell rawdata must match the cells array
         mesh_vtu.cell_data,
     )
 

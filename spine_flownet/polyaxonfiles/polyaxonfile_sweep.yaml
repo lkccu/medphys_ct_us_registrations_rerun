@@ -30,7 +30,7 @@ environment:
       limits: 1
 
 params:
-  dataset_path: '/data/Spine_Flownet/new_data_raycasted/'
+  dataset_path: '/rawdata/Spine_Flownet/new_data_raycasted/'
   wandb_key: d3424a60f5e39087781fde8ff973ee92dd6da70d
   wandb_sweep_id: v6hbtd55
   wandb_sweep_count: 10

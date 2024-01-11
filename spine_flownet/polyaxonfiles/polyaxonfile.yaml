@@ -28,7 +28,7 @@ environment:
     gpuMemory: "12"
 
 params:
-  dataset_path: '/data/Spine_Flownet/spine_clouds/'
+  dataset_path: '/rawdata/Spine_Flownet/spine_clouds/'
   loss: rigidity
   wandb_key: d3424a60f5e39087781fde8ff973ee92dd6da70d
 

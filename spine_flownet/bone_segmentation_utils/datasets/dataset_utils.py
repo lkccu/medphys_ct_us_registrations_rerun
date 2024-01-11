@@ -217,7 +217,7 @@ def get_id_from_filename(filename):
 
 def get_subject_based_random_split(subject_ids, split_percentages=(80, 10, 10)):
     """
-    Considering an input data_list where the data are saved as subjectId_imageId.fmt, it generates train and validation
+    Considering an input data_list where the rawdata are saved as subjectId_imageId.fmt, it generates train and validation
     folders with a subject based split in a random way
     Args:
         full_data_list:

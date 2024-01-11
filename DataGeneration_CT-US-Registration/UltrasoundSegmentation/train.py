@@ -27,7 +27,7 @@ def train(root_path_spine, txt_file):
 
     train_dataset, val_dataset = create_dataset(root_path_spine, txt_file)
 
-    # Create the data loaders
+    # Create the rawdata loaders
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=10)
     val_loader = DataLoader(val_dataset, batch_size=1, shuffle=True)
 
@@ -66,8 +66,8 @@ def train(root_path_spine, txt_file):
 
         total_batches = len(train_loader)
         for batch_idx, batch_data in enumerate(train_loader):
-            inputs = batch_data["image"]['data'].to(device).squeeze(dim=4)
-            labels = batch_data["label"]['data'].to(device).squeeze(dim=4)
+            inputs = batch_data["image"]['rawdata'].to(device).squeeze(dim=4)
+            labels = batch_data["label"]['rawdata'].to(device).squeeze(dim=4)
 
             # Zero the gradients
             optimizer.zero_grad()
@@ -102,8 +102,8 @@ def train(root_path_spine, txt_file):
             num_validation = np.min((len(val_loader), 50))  # limit the number of validations
             visualization_idx = np.random.choice(num_validation, 1)
             for idx, val_data in enumerate(val_loader):
-                val_inputs = val_data["image"]['data'].to(device).squeeze(dim=4)
-                val_labels = val_data["label"]['data'].to(device).squeeze(dim=4)
+                val_inputs = val_data["image"]['rawdata'].to(device).squeeze(dim=4)
+                val_labels = val_data["label"]['rawdata'].to(device).squeeze(dim=4)
                 val_outputs = model(val_inputs)
                 val_loss += loss_function(val_outputs, val_labels).item()
                 metric(post_trans(val_outputs), val_labels)

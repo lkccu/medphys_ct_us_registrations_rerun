@@ -1,5 +1,7 @@
 import argparse
 import os
+import subprocess
+import time
 
 
 def process(root_path_spine, txt_file):
@@ -10,7 +12,9 @@ def process(root_path_spine, txt_file):
     # Process each line
     for line in lines:
         line = line.strip()  # Remove leading/trailing whitespaces
+        # todo sub
         subfolder_path = os.path.join(root_path_spine, f"sub-{line}/")
+        # subfolder_path = os.path.join(root_path_spine, line)
 
         # Find the nii.gz file without 'seg' in its name
         batch_files = [
@@ -24,6 +28,10 @@ def process(root_path_spine, txt_file):
 
             arguments_imfusion = f"batch={os.path.join(subfolder_path, batch_file)}"
             print('ARGUMENTS: ', arguments_imfusion)
+            # p = subprocess.Popen("ImFusionConsole" + " " + workspace_us_simulation + " " + arguments_imfusion)
+            # time.sleep(10)
+            # p.kill()
+            # todo os.sys
             os.system("ImFusionConsole" + " " + workspace_us_simulation + " " + arguments_imfusion)
             print('################################################### ')
 

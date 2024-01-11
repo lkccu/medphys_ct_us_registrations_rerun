@@ -266,7 +266,7 @@ def save_training_data(save_folder, data_id, source, deformed_source, original_f
 
 def run_cpd(data_batch, save_path, cpd_iterations=100, plot_iterations=False):
     # ##############################################################################################################
-    # ############################################## Getting the data ##############################################
+    # ############################################## Getting the rawdata ##############################################
     # ##############################################################################################################
     source_pc, target_pc, color1, color2, gt_flow, mask1, constraint, position1, position2, file_name, tre_points \
         = data_batch
@@ -275,7 +275,7 @@ def run_cpd(data_batch, save_path, cpd_iterations=100, plot_iterations=False):
         save_data(data_dict={'constraint_' + str(i): source_pc[item, ...]},
                   save_path=os.path.join(save_path, file_name))
 
-    # Preprocessing and saving unprocessed data
+    # Preprocessing and saving unprocessed rawdata
     vertebra_dict = preprocess_input(source_pc, gt_flow, position1, constrain_pairs, tre_points)
 
     # ##############################################################################################################
@@ -305,11 +305,11 @@ def run_cpd(data_batch, save_path, cpd_iterations=100, plot_iterations=False):
     # ################################ 2.  2nd CPD iteration on each vertebra ######################################
     # ##############################################################################################################
 
-    # 2.a Getting the updated data to run the constrained CPD
+    # 2.a Getting the updated rawdata to run the constrained CPD
     updated_source = source_pc_it1
     updated_gt_flow = source_pc + gt_flow - source_pc_it1  # the flow to move the source to target after iteration 1
 
-    # 2.b Getting the updated pre-processed input data
+    # 2.b Getting the updated pre-processed input rawdata
     vertebra_dict_it1 = preprocess_input(updated_source, updated_gt_flow, position1, constrain_pairs, tre_points)
 
     # 2.c Iterate over all vertebrae and apply the constrained CPD
@@ -363,7 +363,7 @@ def run_cpd(data_batch, save_path, cpd_iterations=100, plot_iterations=False):
                                             position=None,
                                             ))
 
-        # 2.h Saving data after second iteration
+        # 2.h Saving rawdata after second iteration
         print(f"{os.path.join(save_path, file_name)}, vertebra: L{i+1}")
         save_data(data_dict={'source_v' + str(i): original_source_vertebra,
                              'tre_points_v' + str(i): vertebra_dict[i]['tre_points'],

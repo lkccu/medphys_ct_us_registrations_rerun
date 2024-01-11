@@ -33,10 +33,10 @@ def index_points(points, idx):
     """
 
     Input:
-        points: input points data, [B, N, C]
-        idx: sample index data, [B, S]
+        points: input points rawdata, [B, N, C]
+        idx: sample index rawdata, [B, S]
     Return:
-        new_points:, indexed points data, [B, S, C]
+        new_points:, indexed points rawdata, [B, S, C]
     """
     device = points.device
     B = points.shape[0]
@@ -52,7 +52,7 @@ def index_points(points, idx):
 def farthest_point_sample(xyz, npoint):
     """
     Input:
-        xyz: pointcloud data, [B, N, C]
+        xyz: pointcloud rawdata, [B, N, C]
         npoint: number of samples
     Return:
         centroids: sampled pointcloud index, [B, npoint]
@@ -152,11 +152,11 @@ class PointNetSetAbstraction(nn.Module):
     def forward(self, xyz, points):
         """
         Input:
-            xyz: input points position data, [B, C, N]
-            points: input points data, [B, D, N]
+            xyz: input points position rawdata, [B, C, N]
+            points: input points rawdata, [B, D, N]
         Return:
-            new_xyz: sampled points position data, [B, S, C]
-            new_points_concat: sample points feature data, [B, S, D']
+            new_xyz: sampled points position rawdata, [B, S, C]
+            new_points_concat: sample points feature rawdata, [B, S, D']
         """
         device = xyz.device
         B, C, N = xyz.shape
@@ -173,8 +173,8 @@ class PointNetSetAbstraction(nn.Module):
         # these are missing: idx, grouped_xyz
         new_points = self.queryandgroup(xyz_t, new_xyz.transpose(2, 1).contiguous(), points)  # [B, 3+C, N, S]
 
-        # new_xyz: sampled points position data, [B, C, npoint]
-        # new_points: sampled points data, [B, C+D, npoint, nsample]
+        # new_xyz: sampled points position rawdata, [B, C, npoint]
+        # new_points: sampled points rawdata, [B, C+D, npoint, nsample]
         for i, conv in enumerate(self.mlp_convs):
             if self.bn:
                 bn = self.mlp_bns[i]
@@ -344,12 +344,12 @@ class PointNetFeaturePropogation(nn.Module):
     def forward(self, pos1, pos2, feature1, feature2):
         """
         Input:
-            xyz1: input points position data, [B, C, N]
-            xyz2: sampled input points position data, [B, C, S]
-            points1: input points data, [B, D, N]
-            points2: input points data, [B, D, S]
+            xyz1: input points position rawdata, [B, C, N]
+            xyz2: sampled input points position rawdata, [B, C, S]
+            points1: input points rawdata, [B, D, N]
+            points2: input points rawdata, [B, D, S]
         Return:
-            new_points: upsampled points data, [B, D', N]
+            new_points: upsampled points rawdata, [B, D', N]
         """
         pos1_t = pos1.permute(0, 2, 1).contiguous()
         pos2_t = pos2.permute(0, 2, 1).contiguous()
