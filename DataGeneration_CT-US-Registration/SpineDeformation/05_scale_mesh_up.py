@@ -50,9 +50,12 @@ if __name__ == '__main__':
 
                 if p == 'PathToSave':
                     value = vert_mesh_path.replace('scaled_deformed','_deformed')
-
+                # arguments_imfusion += value + ";"
                 arguments_imfusion += p + "=" + value + " "
 
             print('ARGUMENTS: ', arguments_imfusion)
             os.system("ImFusionConsole" + " " + args.workspace_scale_mesh + " " + arguments_imfusion)
             print('################################################### ')
+            # with open('five.txt', 'a') as file:
+            #     # 写入内容到文件
+            #     file.write(arguments_imfusion+'\n')
